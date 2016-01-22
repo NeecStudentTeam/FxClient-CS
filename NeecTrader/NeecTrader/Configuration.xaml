@@ -1,0 +1,8 @@
+﻿<Window x:Class="NeecTrader.Configuration"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Configuration" Height="300" Width="300">
+    <Grid>
+        <Label Content="設定画面" />
+    </Grid>
+</Window>

@@ -1,0 +1,9 @@
+﻿<Window x:Class="NeecTrader.OrderClose_menu"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="OrderClose_menu" Height="300" Width="300">
+    <Grid>
+        <Label Content="詳細決済画面" />
+
+    </Grid>
+</Window>

@@ -1,0 +1,104 @@
+﻿<Window x:Class="NeecTrader.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="600" Width="1024">
+    <Window.Resources>
+        <ContextMenu x:Key="SymbolPair">
+            <MenuItem Header="チャート表示"  Click="chart_show"/>
+            <MenuItem Header="注文詳細画面" Click="ordersend_menu" />
+        </ContextMenu>
+        <ContextMenu x:Key="TicketNumber">
+            <MenuItem Header="チャート表示" Click="chart_show"/>
+            <MenuItem Header="決済詳細画面" Click="orderclose_menu" />
+            <MenuItem Header="注文設定" Click="Configration_menu" />
+        </ContextMenu>
+        <ContextMenu x:Key="Chart">
+            <MenuItem Header="注文詳細画面" Click="ordersend_menu"/>
+            <MenuItem Header="決済詳細画面" Click="orderclose_menu" />
+            <MenuItem Header="チャート設定" Click="Configration_menu" />
+        </ContextMenu>
+    </Window.Resources>
+    <DockPanel>
+        <!--メニュー-->
+        <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
+            <Menu VerticalAlignment="Top">
+                <MenuItem Header="設定">
+                    <MenuItem Header="チャート設定" Click="Configration_menu" />
+                </MenuItem>
+            </Menu>
+        </StackPanel>
+        <!--注文番号一覧、運用比率、ログ-->
+        <StackPanel DockPanel.Dock="Bottom">
+            <TabControl Name="Tab" TabStripPlacement="Bottom">
+                <TabItem  Header="注文番号" Name="OrderNumber">
+                    <DockPanel>
+                        <DockPanel DockPanel.Dock="Top" Height="150">
+                            <DataGrid  Name="TicketNumberGrid" AutoGenerateColumns="False"
+                                    CanUserAddRows="False" ContextMenu="{DynamicResource TicketNumber}">
+                                <DataGrid.Columns>
+                                    <DataGridCheckBoxColumn Binding="{Binding check}" Header="簡易注文許可"/>
+                                    <DataGridTextColumn Binding="{Binding ticketnumber}" Header="チケット番号"/>
+                                    <DataGridTextColumn Binding="{Binding time}" Header="取引時間"/>
+                                    <DataGridTextColumn Binding="{Binding cmd}" Header="取引種類"/>
+                                    <DataGridTextColumn Binding="{Binding lot}" Header="数量"/>
+                                    <DataGridTextColumn Binding="{Binding symbol}" Header="シンボルぺア"/>
+                                    <DataGridTextColumn Binding="{Binding rate}" Header="価格"/>
+                                    <DataGridTextColumn Binding="{Binding stoploss}" Header="決済逆指値(S/L)"/>
+                                    <DataGridTextColumn Binding="{Binding takeprofit}" Header="決済指値(T/P)"/>
+                                    <DataGridTextColumn Binding="{Binding nowrate}" Header="現在の価格"/>
+                                    <DataGridTextColumn Binding="{Binding profit}" Header="損益"/>
+                                    <DataGridTemplateColumn Header="簡易決済" >
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Button Name="orderclose" Content="決済" Click="orderclose_Click"/>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </DockPanel>
+                        <DockPanel DockPanel.Dock="Bottom">
+                            <Label Content="口座情報"  Background="Beige"/>
+                        </DockPanel>
+                    </DockPanel>
+                </TabItem>
+                <TabItem Header="取引ログ" Name="Log">
+                    <Grid>
+                        <TextBox Name="log" Text="取引ログ" MaxHeight="150" VerticalScrollBarVisibility="Auto"/>
+                    </Grid>
+                </TabItem>
+            </TabControl>
+        </StackPanel>
+        <!--シンボル-->
+
+        <DockPanel DockPanel.Dock="Left">
+            <DataGrid Name="SymbolPair" AutoGenerateColumns="False"
+                        CanUserAddRows="False" ContextMenu="{DynamicResource SymbolPair}" >
+                <DataGrid.Columns>
+                    <DataGridCheckBoxColumn Binding="{Binding check}" Header="簡易決済許可"/>
+                    <DataGridTextColumn Binding="{Binding symbol}" Header="シンボル名"/>
+                    <DataGridTextColumn Binding="{Binding bid}" Header="Bid"/>
+                    <DataGridTemplateColumn Header="簡易注文" >
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Name="bid_ordersend" Content="注文" Click="bid_ordersend_Click"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn Binding="{Binding ask}" Header="Ask"/>
+                    <DataGridTemplateColumn Header="簡易注文" >
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Name="ask_ordersend" Content="注文" Click="ask_ordersend_Click" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </DockPanel>
+        <!--チャート-->
+        <DockPanel DockPanel.Dock="Right" ContextMenu="{DynamicResource Chart}">
+            <Label Content="chart"  Background="Azure"/>
+        </DockPanel>
+    </DockPanel>
+</Window>
