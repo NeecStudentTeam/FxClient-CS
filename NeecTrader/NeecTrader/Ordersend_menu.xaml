@@ -29,7 +29,7 @@
                     <RowDefinition Height="10*" />
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Row="1"  Grid.Column="1" Text="シンボルぺア" />
-                <ComboBox Name="SymbolPairComboBox" Grid.Row="2" Grid.Column="1" >
+                <ComboBox Name="SymbolComboBox" Grid.Row="2" Grid.Column="1" >
                     <ComboBoxItem Content="usdjpy" />
                     <ComboBoxItem Content="eurjpy" />
                 </ComboBox>

@@ -16,5 +16,11 @@ namespace NeecTrader
         public double ask { get; set; }
         //public bool ordersend_ask{ get; set; }
 
+
+        public override string ToString()
+        {
+            return symbol;
+        }
+
     }
 }

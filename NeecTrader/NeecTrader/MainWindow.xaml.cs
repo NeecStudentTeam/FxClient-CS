@@ -25,39 +25,23 @@ namespace NeecTrader
         //ObservableCollection<Symbol> symbolList;
         ObservableCollection<TicketNumber> ticketNumberList;
 
+        TradeController trade;
 
         public MainWindow()
         {
             InitializeComponent();
 
+            //トレードコントローラインスタンス化。
+            this.trade = new TradeController(true);
 
-            Symbol[] symbolPairs = new[] {
-                new Symbol {check = true, symbol = "USDCHF", bid = 111.111 ,ask = 222.222},
-                new Symbol {check = true, symbol = "GBPUSD", bid = 111.111 ,ask = 222.222},
-                new Symbol {check = true, symbol = "EURUSD", bid = 111.111 ,ask = 222.222},
-                new Symbol {check = true, symbol = "USDJPY", bid = 111.111 ,ask = 222.222},
-                new Symbol {check = true, symbol = "USDCAD", bid = 111.111 ,ask = 222.222},
-                new Symbol {check = true, symbol = "AUDUSD", bid = 111.111 ,ask = 222.222},
-                new Symbol {check = true, symbol = "EURGBP", bid = 111.111 ,ask = 222.222},
-                new Symbol {check = true, symbol = "EURAUD", bid = 111.111 ,ask = 222.222},
-                new Symbol {symbol = "EURCHF", bid = 111.111 ,ask = 222.222},
-                new Symbol {symbol = "EURJPY", bid = 111.111 ,ask = 222.222},
-                new Symbol {symbol = "GBPJPY", bid = 111.111 ,ask = 222.222},
-                new Symbol {symbol = "GBPCHF", bid = 111.111 ,ask = 222.222},
-                new Symbol {symbol = "CADJPY", bid = 111.111 ,ask = 222.222},
-                new Symbol {symbol = "GBPJPY", bid = 111.111 ,ask = 222.222},
-                new Symbol {symbol = "AUDNZD", bid = 111.111 ,ask = 222.222},
-                new Symbol {symbol = "AUDCAD", bid = 111.111 ,ask = 222.222},
-                new Symbol {symbol = "AUDCHF", bid = 111.111 ,ask = 222.222},
-                new Symbol {symbol = "AUDJPY", bid = 111.111 ,ask = 222.222},
-                new Symbol {symbol = "CHFJPY", bid = 111.111 ,ask = 222.222},
-                new Symbol {symbol = "EURNZD", bid = 111.111 ,ask = 222.222},
-                new Symbol {symbol = "EURCAD", bid = 111.111 ,ask = 222.222},
-                new Symbol {symbol = "CADCHF", bid = 111.111 ,ask = 222.222},
-                new Symbol {symbol = "NZDJPY", bid = 111.111 ,ask = 222.222},
-                new Symbol {symbol = "NZDUSD", bid = 111.111 ,ask = 222.222}
-            };
 
+            Symbol[] Symbols = TradeController.GetSymbols();
+
+            //アップデート
+            foreach(Symbol symbol in Symbols)
+            {
+                trade.UpdateRateSymbol(symbol);
+            }
 
             ticketNumberList = new ObservableCollection<TicketNumber> {
                 new TicketNumber{check = true ,ticketnumber = 11111, time = new DateTime(2016,01,15), cmd = "Ask" , lot = 0.10, symbol = "USDJPY" , rate = 111.111,
@@ -81,7 +65,7 @@ namespace NeecTrader
 
 
             // DataGridに設定する
-            this.SymbolPair.ItemsSource = symbolPairs;
+            this.Symbol.ItemsSource = Symbols;
             this.TicketNumberGrid.ItemsSource = ticketNumberList;
 
 

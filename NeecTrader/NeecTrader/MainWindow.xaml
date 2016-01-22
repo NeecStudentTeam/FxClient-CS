@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="MainWindow" Height="600" Width="1024">
     <Window.Resources>
-        <ContextMenu x:Key="SymbolPair">
+        <ContextMenu x:Key="Symbol">
             <MenuItem Header="チャート表示"  Click="chart_show"/>
             <MenuItem Header="注文詳細画面" Click="ordersend_menu" />
         </ContextMenu>
@@ -72,8 +72,8 @@
         <!--シンボル-->
 
         <DockPanel DockPanel.Dock="Left">
-            <DataGrid Name="SymbolPair" AutoGenerateColumns="False"
-                        CanUserAddRows="False" ContextMenu="{DynamicResource SymbolPair}" >
+            <DataGrid Name="Symbol" AutoGenerateColumns="False"
+                        CanUserAddRows="False" ContextMenu="{DynamicResource Symbol}" >
                 <DataGrid.Columns>
                     <DataGridCheckBoxColumn Binding="{Binding check}" Header="簡易決済許可"/>
                     <DataGridTextColumn Binding="{Binding symbol}" Header="シンボル名"/>

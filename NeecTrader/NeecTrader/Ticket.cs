@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 
-namespace MT4CScliant
+namespace NeecTrader
 {
     // 表示する個々のデータ（データバインド可能）
     public class Ticket : INotifyPropertyChanged
@@ -20,8 +20,8 @@ namespace MT4CScliant
         }
 
         //Symbolプロパティ
-        SymbolPair _symbol;
-        public SymbolPair Symbol
+        Symbol _symbol;
+        public Symbol Symbol
         {
             get { return _symbol; }
             set { _symbol = value; OnPropertyChanged("symbol"); }

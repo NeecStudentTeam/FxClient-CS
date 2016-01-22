@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace MT4CScliant
+namespace NeecTrader
 {
     public abstract class Updater : IUpdater
     {

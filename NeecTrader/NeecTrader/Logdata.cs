@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MT4CScliant
+namespace NeecTrader
 {
     //ログ出力用クラス
     class Logdata

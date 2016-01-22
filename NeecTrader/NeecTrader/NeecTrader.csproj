@@ -84,7 +84,6 @@
     </Compile>
     <Compile Include="PrintLogger.cs" />
     <Compile Include="Symbol.cs" />
-    <Compile Include="SymbolPair.cs" />
     <Compile Include="TextBoxLogger.cs" />
     <Compile Include="Ticket.cs" />
     <Compile Include="TicketNumber.cs" />

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MT4CScliant
+namespace NeecTrader
 {
     public interface ILogger
     {

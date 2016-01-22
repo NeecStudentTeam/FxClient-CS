@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms.DataVisualization.Charting;
 
-namespace MT4CScliant
+namespace NeecTrader
 {
     public class FxChartUpdater : Updater
     {
@@ -18,7 +18,7 @@ namespace MT4CScliant
 
         System.Windows.Forms.DataVisualization.Charting.Chart chart;
         TradeController trade;
-        SymbolPair currentSymbol = null;
+        Symbol currentSymbol = null;
 
         public FxChartUpdater(System.Windows.Forms.DataVisualization.Charting.Chart chart, TradeController trade) : base(1000)
         {
@@ -251,13 +251,13 @@ namespace MT4CScliant
             }
         }
 
-        public void Start(SymbolPair symbol)
+        public void Start(Symbol symbol)
         {
             this.ChangeSymbol(symbol);
             this.Start();
         }
 
-        public void ChangeSymbol(SymbolPair symbol)
+        public void ChangeSymbol(Symbol symbol)
         {
             currentSymbol = symbol;
             Clear();

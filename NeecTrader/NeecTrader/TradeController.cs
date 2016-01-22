@@ -5,57 +5,31 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MT4CScliant
+namespace NeecTrader
 {
     public class TradeController
     {
-        static SymbolPair[] symbolPairs = new[]
-            {
-                new SymbolPair {Symbol = "USDCHF"},
-                new SymbolPair {Symbol = "GBPUSD"},
-                new SymbolPair {Symbol = "EURUSD"},
-                new SymbolPair {Symbol = "USDJPY"},
-                new SymbolPair {Symbol = "USDCAD"},
-                new SymbolPair {Symbol = "AUDUSD"},
-                new SymbolPair {Symbol = "EURGBP"},
-                new SymbolPair {Symbol = "EURAUD"},
-                new SymbolPair {Symbol = "EURCHF"},
-                new SymbolPair {Symbol = "EURJPY"},
-                new SymbolPair {Symbol = "GBPJPY"},
-                new SymbolPair {Symbol = "GBPCHF"},
-                new SymbolPair {Symbol = "CADJPY"},
-                new SymbolPair {Symbol = "GBPJPY"},
-                new SymbolPair {Symbol = "AUDNZD"},
-                new SymbolPair {Symbol = "AUDCAD"},
-                new SymbolPair {Symbol = "AUDCHF"},
-                new SymbolPair {Symbol = "AUDJPY"},
-                new SymbolPair {Symbol = "CHFJPY"},
-                new SymbolPair {Symbol = "EURNZD"},
-                new SymbolPair {Symbol = "EURCAD"},
-                new SymbolPair {Symbol = "CADCHF"},
-                new SymbolPair {Symbol = "NZDJPY"},
-                new SymbolPair {Symbol = "NZDUSD"}
-
-            };
 
         ILogger logger;
 
-        MT4 mt4;
+        IMT4 mt4;
 
         List<Ticket> orderTicketList = new List<Ticket>();
 
-        class MyMT4 : MT4
+        /// <summary>
+        /// インスタンス化。
+        /// </summary>
+        /// <param name="useStub">ネットワーク通信をしないスタブを使用する場合はtrue</param>
+        public TradeController(bool useStub = false)
         {
-            public MyMT4()
-                : base()
+            if (useStub)
             {
-
+                this.mt4 = new MT4Stub();
             }
-        }
-
-        public TradeController()
-        {
-            this.mt4 = new MyMT4();
+            else
+            {
+                this.mt4 = new MT4();
+            }
             this.logger = new PrintLogger();
         }
 
@@ -75,14 +49,49 @@ namespace MT4CScliant
             return this.mt4.isConnected();
         }
 
-        public static SymbolPair[] GetSymbolPairs()
+        public static Symbol[] GetSymbols()
         {
-            return TradeController.symbolPairs;
+            Symbol[] symbols = new[]
+            {
+                new Symbol {symbol = "USDCHF"},
+                new Symbol {symbol = "GBPUSD"},
+                new Symbol {symbol = "EURUSD"},
+                new Symbol {symbol = "USDJPY"},
+                new Symbol {symbol = "USDCAD"},
+                new Symbol {symbol = "AUDUSD"},
+                new Symbol {symbol = "EURGBP"},
+                new Symbol {symbol = "EURAUD"},
+                new Symbol {symbol = "EURCHF"},
+                new Symbol {symbol = "EURJPY"},
+                new Symbol {symbol = "GBPJPY"},
+                new Symbol {symbol = "GBPCHF"},
+                new Symbol {symbol = "CADJPY"},
+                new Symbol {symbol = "GBPJPY"},
+                new Symbol {symbol = "AUDNZD"},
+                new Symbol {symbol = "AUDCAD"},
+                new Symbol {symbol = "AUDCHF"},
+                new Symbol {symbol = "AUDJPY"},
+                new Symbol {symbol = "CHFJPY"},
+                new Symbol {symbol = "EURNZD"},
+                new Symbol {symbol = "EURCAD"},
+                new Symbol {symbol = "CADCHF"},
+                new Symbol {symbol = "NZDJPY"},
+                new Symbol {symbol = "NZDUSD"}
+
+            };
+
+            return symbols;
         }
 
-        public Ticket OrderSend(SymbolPair symbol, int cmd, double volume, double price, int slippage, double stoploss, double takeprofit, string comment, int magic, MT4DateTime expiration, MT4Color arrow_color)
+        public void UpdateRateSymbol(Symbol symbol)
         {
-            int number = mt4.OrderSend(symbol.Symbol, cmd, volume, price, slippage, stoploss, takeprofit, comment, magic, expiration, arrow_color);
+            symbol.ask = this.GetAsk(symbol);
+            symbol.bid = this.GetBid(symbol);
+        }
+
+        public Ticket OrderSend(Symbol symbol, int cmd, double volume, double price, int slippage, double stoploss, double takeprofit, string comment, int magic, MT4DateTime expiration, MT4Color arrow_color)
+        {
+            int number = mt4.OrderSend(symbol.symbol, cmd, volume, price, slippage, stoploss, takeprofit, comment, magic, expiration, arrow_color);
 
 
             if(number != -1)
@@ -112,14 +121,14 @@ namespace MT4CScliant
             }
         }
 
-        public double GetBid(SymbolPair symbol)
+        public double GetBid(Symbol symbol)
         {
-            return mt4.MarketInfo(symbol.Symbol,9);
+            return mt4.MarketInfo(symbol.symbol, 9);
         }
 
-        public double GetAsk(SymbolPair symbol)
+        public double GetAsk(Symbol symbol)
         {
-            return mt4.MarketInfo(symbol.Symbol, 10);
+            return mt4.MarketInfo(symbol.symbol, 10);
         }
 
         public void SetLogger(ILogger logger)
