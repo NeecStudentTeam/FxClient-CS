@@ -19,12 +19,26 @@ namespace NeecTrader
     /// </summary>
     public partial class OrderSend_menu : Window
     {
+
+        TradeController trade;
+
+
+
         public OrderSend_menu()
         {
             InitializeComponent();
 
+            DataContext = new TestBindObject() { A = 10 };
+
+            //トレードコントローラインスタンス化。
+            this.trade = new TradeController(true);
+
+            Symbol[] Symbols = TradeController.GetSymbols();            
+
             this.tyuumon_syurui_combobox.SelectedIndex = 0;
             this.rot_combobox.SelectedIndex = 0;
+
+            this.SymbolComboBox.ItemsSource = Symbols;
 
         }
 
@@ -62,7 +76,12 @@ namespace NeecTrader
 
         private void OrderSend_Button_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("発注するンゴ");
+            var bindingData = DataContext as TestBindObject;
+            //MessageBox.Show("a");
+            if (bindingData != null)
+            {
+                MessageBox.Show("内部値は : " + bindingData.A.ToString());
+            }
         }
     }
 }

@@ -109,16 +109,7 @@ namespace NeecTrader
         }
 
 
-        private void Configration_menu(object sender, RoutedEventArgs e)
-        {
-            Configuration dialog = new Configuration();
-
-            dialog.Owner = this;
-            //モードレスウィンドウ
-            dialog.Show();
-
-        }
-
+        
         private void chart_show(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("チャート表示するンゴ");

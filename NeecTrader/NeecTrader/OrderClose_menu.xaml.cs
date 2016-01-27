@@ -23,5 +23,11 @@ namespace NeecTrader
         {
             InitializeComponent();
         }
+
+        private void OrderClose_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("決済");
+
+        }
     }
 }

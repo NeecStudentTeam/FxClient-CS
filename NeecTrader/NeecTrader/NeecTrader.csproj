@@ -62,14 +62,15 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Configuration.xaml.cs">
-      <DependentUpon>Configuration.xaml</DependentUpon>
+    <Compile Include="BindableNumericUpDown.xaml.cs">
+      <DependentUpon>BindableNumericUpDown.xaml</DependentUpon>
     </Compile>
     <Compile Include="FxChartUpdater.cs" />
     <Compile Include="ILogger.cs" />
@@ -84,12 +85,13 @@
     </Compile>
     <Compile Include="PrintLogger.cs" />
     <Compile Include="Symbol.cs" />
+    <Compile Include="TestBindObject.cs" />
     <Compile Include="TextBoxLogger.cs" />
     <Compile Include="Ticket.cs" />
     <Compile Include="TicketNumber.cs" />
     <Compile Include="TradeController.cs" />
     <Compile Include="Updater.cs" />
-    <Page Include="Configuration.xaml">
+    <Page Include="BindableNumericUpDown.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
