@@ -112,9 +112,27 @@ namespace NeecTrader
         
         private void chart_show(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("チャート表示するンゴ");
+            TabItem tab = new TabItem();
+
+            //選択したセルの値を取得
+            string symbol = Symbol.CurrentCell.Item.ToString();                
+            //ヘッダー名
+            tab.Header = symbol;
+            tab.Name = symbol;
+            //新しいタブアイテムを追加
+            Chart.Items.Add(tab);
+
 
         }
+
+        private void ChartClose(object sender, RoutedEventArgs e)
+        {
+
+            int i = Chart.SelectedIndex;
+            Chart.Items.RemoveAt(i);
+        }
+
+       
 
 
 
