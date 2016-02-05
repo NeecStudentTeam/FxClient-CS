@@ -30,7 +30,7 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>            
             <TextBlock Grid.Column="1" Grid.Row="1" Text="注文番号" />
-            <ComboBox Name="TicketNumber" Grid.Column="1" Grid.Row="2" />
+            <ComboBox Name="Ticket" Grid.Column="1" Grid.Row="2" />
             <TextBlock Grid.Column="1" Grid.Row="3" Text="注文の種類" />
             <TextBlock Name="tyumon_syurui" Grid.Column="1" Grid.Row="4" Text="Ask" />
             <TextBlock Grid.Column="1" Grid.Row="5" Text="注文時の値段" />

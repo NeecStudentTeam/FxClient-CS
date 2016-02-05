@@ -23,7 +23,7 @@ namespace NeecTrader
     {
 
         //ObservableCollection<Symbol> symbolList;
-        ObservableCollection<TicketNumber> ticketNumberList;
+        ObservableCollection<Ticket> ticketList;
 
         TradeController trade;
 
@@ -42,23 +42,25 @@ namespace NeecTrader
             {
                 trade.UpdateRateSymbol(symbol);
             }
+            /*
+            TicketList = new ObservableCollection<Ticket> {
+                new Ticket{check = true ,number = 11111, time = new DateTime(2016,01,15), cmd = "Ask" , lot = 0.10, symbol = NeecTrader.Symbol.GetSymbolWithName("USDJPY") , rate = 111.111,
+                stoploss = 1111,takeprofit = 2222, nowrate = 222.222, profit = 9999},
+                new Ticket{check= true ,number = 11112, time = new DateTime(2016,01,15), cmd = "Bsk" , lot = 0.10, symbol =  NeecTrader.Symbol.GetSymbolWithName("EURJPY") , rate = 111.111,
+                stoploss = 1111,takeprofit = 2222, nowrate = 222.222, profit = 9999},
+                new Ticket{check = false ,number = 11113, time = new DateTime(2016,01,15), cmd = "Ask" , lot = 0.10, symbol =  NeecTrader.Symbol.GetSymbolWithName("USDJPY") , rate = 111.111,
+                stoploss = 1111,takeprofit = 2222, nowrate = 222.222, profit = 9999},
+                 new Ticket{check = true ,number = 11113, time = new DateTime(2016,01,15), cmd = "Ask" , lot = 0.10, symbol =  NeecTrader.Symbol.GetSymbolWithName("USDJPY") , rate = 111.111,
+                stoploss = 1111,takeprofit = 2222, nowrate = 222.222, profit = 9999},
+                 new Ticket{check = true ,number = 11114, time = new DateTime(2016,01,15), cmd = "Ask" , lot = 0.10, symbol =  NeecTrader.Symbol.GetSymbolWithName("USDJPY") , rate = 111.111,
+                stoploss = 1111,takeprofit = 2222, nowrate = 222.222, profit = 9999},
+                 new Ticket{check = true ,number = 11115, time = new DateTime(2016,01,15), cmd = "Ask" , lot = 0.10, symbol =  NeecTrader.Symbol.GetSymbolWithName("USDJPY") , rate = 111.111,
+                stoploss = 1111,takeprofit = 2222, nowrate = 222.222, profit = 9999},
+                 new Ticket{check = true ,number = 11116, time = new DateTime(2016,01,15), cmd = "Ask" , lot = 0.10, symbol =  NeecTrader.Symbol.GetSymbolWithName("USDJPY") , rate = 111.111,
+                stoploss = 1111,takeprofit = 2222, nowrate = 222.222, profit = 9999},
+            };*/
 
-            ticketNumberList = new ObservableCollection<TicketNumber> {
-                new TicketNumber{check = true ,ticketnumber = 11111, time = new DateTime(2016,01,15), cmd = "Ask" , lot = 0.10, symbol = "USDJPY" , rate = 111.111,
-                stoploss = 1111,takeprofit = 2222, nowrate = 222.222, profit = 9999},
-                new TicketNumber{check= true ,ticketnumber = 11112, time = new DateTime(2016,01,15), cmd = "Bsk" , lot = 0.10, symbol = "EURJPY" , rate = 111.111,
-                stoploss = 1111,takeprofit = 2222, nowrate = 222.222, profit = 9999},
-                new TicketNumber{check = false ,ticketnumber = 11113, time = new DateTime(2016,01,15), cmd = "Ask" , lot = 0.10, symbol = "USDJPY" , rate = 111.111,
-                stoploss = 1111,takeprofit = 2222, nowrate = 222.222, profit = 9999},
-                 new TicketNumber{check = true ,ticketnumber = 11113, time = new DateTime(2016,01,15), cmd = "Ask" , lot = 0.10, symbol = "USDJPY" , rate = 111.111,
-                stoploss = 1111,takeprofit = 2222, nowrate = 222.222, profit = 9999},
-                 new TicketNumber{check = true ,ticketnumber = 11114, time = new DateTime(2016,01,15), cmd = "Ask" , lot = 0.10, symbol = "USDJPY" , rate = 111.111,
-                stoploss = 1111,takeprofit = 2222, nowrate = 222.222, profit = 9999},
-                 new TicketNumber{check = true ,ticketnumber = 11115, time = new DateTime(2016,01,15), cmd = "Ask" , lot = 0.10, symbol = "USDJPY" , rate = 111.111,
-                stoploss = 1111,takeprofit = 2222, nowrate = 222.222, profit = 9999},
-                 new TicketNumber{check = true ,ticketnumber = 11116, time = new DateTime(2016,01,15), cmd = "Ask" , lot = 0.10, symbol = "USDJPY" , rate = 111.111,
-                stoploss = 1111,takeprofit = 2222, nowrate = 222.222, profit = 9999},
-            };
+            this.ticketList = new ObservableCollection<Ticket>();
 
 
 
@@ -66,7 +68,7 @@ namespace NeecTrader
 
             // DataGridに設定する
             this.Symbol.ItemsSource = Symbols;
-            this.TicketNumber.ItemsSource = ticketNumberList;
+            this.Ticket.ItemsSource = ticketList;
 
             //口座情報　あとで
             this.AccountInformation.Text = "口座情報　とりあえず";
@@ -80,10 +82,20 @@ namespace NeecTrader
 
         private void ask_ordersend_Click(object sender, RoutedEventArgs e)
         {
-                      
             MessageBox.Show("買い注文するンゴ");
- 
-
+            //シンボル取得
+            Symbol symbol = ((Button)sender).Tag as Symbol;
+            //注文してチケットを取得
+            Ticket ticket = this.trade.OrderSend(symbol, 1, 1, 1, 1, 1, 1, "hoge2", 1, null, null);
+            //注文が成功したか
+            if(ticket == null)
+            {
+                //注文が失敗したら
+                MessageBox.Show("失敗したンゴすまんこ");
+                return;
+            }
+            //チケットリストに追加
+            this.ticketList.Add(ticket);
         }
 
         private void bid_ordersend_Click(object sender, RoutedEventArgs e)

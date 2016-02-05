@@ -7,7 +7,7 @@
             <MenuItem Header="チャート表示"  Click="chart_show"/>
             <MenuItem Header="注文詳細画面" Click="ordersend_menu" />
         </ContextMenu>
-        <ContextMenu x:Key="TicketNumber">
+        <ContextMenu x:Key="Ticket">
             <MenuItem Header="チャート表示" Click="chart_show"/>
             <MenuItem Header="決済詳細画面" Click="orderclose_menu" />            
         </ContextMenu>
@@ -24,8 +24,8 @@
                 <TabItem  Header="注文番号" Name="OrderNumber">
                     <DockPanel>
                         <DockPanel DockPanel.Dock="Top" Height="150">
-                            <DataGrid  Name="TicketNumber" AutoGenerateColumns="False"
-                                    CanUserAddRows="False" ContextMenu="{DynamicResource TicketNumber}">
+                            <DataGrid  Name="Ticket" AutoGenerateColumns="False"
+                                    CanUserAddRows="False" ContextMenu="{DynamicResource Ticket}">
                                 <DataGrid.ColumnHeaderStyle>
                                     <Style TargetType="DataGridColumnHeader">
                                         <Setter Property="HorizontalContentAlignment" Value="Center"/>
@@ -33,7 +33,7 @@
                                 </DataGrid.ColumnHeaderStyle>
                                 <DataGrid.Columns>
                                     <DataGridCheckBoxColumn Binding="{Binding check}" Header="簡易注文許可"/>
-                                    <DataGridTextColumn Binding="{Binding ticketnumber}" Header="チケット番号"/>
+                                    <DataGridTextColumn Binding="{Binding number}" Header="チケット番号"/>
                                     <DataGridTextColumn Binding="{Binding time}" Header="取引時間"/>
                                     <DataGridTextColumn Binding="{Binding cmd}" Header="取引種類"/>
                                     <DataGridTextColumn Binding="{Binding lot}" Header="数量"/>
@@ -77,7 +77,7 @@
                 </DataGrid.ColumnHeaderStyle>
                 <DataGrid.Columns>
                     <DataGridCheckBoxColumn Binding="{Binding check}" Header="簡易決済許可"/>
-                    <DataGridTextColumn Binding="{Binding symbol}" Header="シンボル名"/>
+                    <DataGridTextColumn Binding="{Binding symbolName}" Header="シンボル名"/>
                     <DataGridTextColumn Binding="{Binding bid}" Header="Bid"/>
                     <DataGridTemplateColumn Header="簡易注文" >
                         <DataGridTemplateColumn.CellTemplate>
@@ -90,7 +90,7 @@
                     <DataGridTemplateColumn Header="簡易注文" >
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Button Name="ask_ordersend" Content="注文" Click="ask_ordersend_Click" />
+                                <Button Name="ask_ordersend" Content="注文" Tag="{Binding}" Click="ask_ordersend_Click" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>

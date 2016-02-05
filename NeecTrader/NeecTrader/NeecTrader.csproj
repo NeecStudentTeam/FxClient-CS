@@ -91,7 +91,6 @@
     <Compile Include="TestBindObject.cs" />
     <Compile Include="TextBoxLogger.cs" />
     <Compile Include="Ticket.cs" />
-    <Compile Include="TicketNumber.cs" />
     <Compile Include="TradeController.cs" />
     <Compile Include="Updater.cs" />
     <Page Include="BindableNumericUpDown.xaml">
