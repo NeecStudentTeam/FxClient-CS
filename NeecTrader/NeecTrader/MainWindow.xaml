@@ -24,8 +24,13 @@
                 <TabItem  Header="注文番号" Name="OrderNumber">
                     <DockPanel>
                         <DockPanel DockPanel.Dock="Top" Height="150">
-                            <DataGrid  Name="TicketNumberGrid" AutoGenerateColumns="False"
+                            <DataGrid  Name="TicketNumber" AutoGenerateColumns="False"
                                     CanUserAddRows="False" ContextMenu="{DynamicResource TicketNumber}">
+                                <DataGrid.ColumnHeaderStyle>
+                                    <Style TargetType="DataGridColumnHeader">
+                                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                    </Style>
+                                </DataGrid.ColumnHeaderStyle>
                                 <DataGrid.Columns>
                                     <DataGridCheckBoxColumn Binding="{Binding check}" Header="簡易注文許可"/>
                                     <DataGridTextColumn Binding="{Binding ticketnumber}" Header="チケット番号"/>
@@ -38,7 +43,7 @@
                                     <DataGridTextColumn Binding="{Binding takeprofit}" Header="決済指値(T/P)"/>
                                     <DataGridTextColumn Binding="{Binding nowrate}" Header="現在の価格"/>
                                     <DataGridTextColumn Binding="{Binding profit}" Header="損益"/>
-                                    <DataGridTemplateColumn Header="簡易決済" >
+                                    <DataGridTemplateColumn Header="簡易決済" Width="*" >
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
                                                 <Button Name="orderclose" Content="決済" Click="orderclose_Click"/>
@@ -49,13 +54,13 @@
                             </DataGrid>
                         </DockPanel>
                         <DockPanel DockPanel.Dock="Bottom">
-                            <Label Content="口座情報"  Background="Beige"/>
+                            <TextBlock Name="AccountInformation"  Background="Beige" Height="20"/>
                         </DockPanel>
                     </DockPanel>
                 </TabItem>
-                <TabItem Header="取引ログ" Name="Log">
+                <TabItem Header="取引ログ" >
                     <Grid>
-                        <TextBox Name="log" Text="取引ログ" MaxHeight="150" VerticalScrollBarVisibility="Auto"/>
+                        <TextBox Name="Log" IsReadOnly="True" Height="150"  MaxHeight="150" VerticalScrollBarVisibility="Auto"/>
                     </Grid>
                 </TabItem>
             </TabControl>
@@ -65,6 +70,11 @@
         <DockPanel DockPanel.Dock="Left">
             <DataGrid Name="Symbol" AutoGenerateColumns="False"
                         CanUserAddRows="False" ContextMenu="{DynamicResource Symbol}" >
+                <DataGrid.ColumnHeaderStyle>
+                    <Style TargetType="DataGridColumnHeader">
+                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                    </Style>
+                </DataGrid.ColumnHeaderStyle>
                 <DataGrid.Columns>
                     <DataGridCheckBoxColumn Binding="{Binding check}" Header="簡易決済許可"/>
                     <DataGridTextColumn Binding="{Binding symbol}" Header="シンボル名"/>

@@ -66,16 +66,23 @@ namespace NeecTrader
 
             // DataGridに設定する
             this.Symbol.ItemsSource = Symbols;
-            this.TicketNumberGrid.ItemsSource = ticketNumberList;
+            this.TicketNumber.ItemsSource = ticketNumberList;
+
+            //口座情報　あとで
+            this.AccountInformation.Text = "口座情報　とりあえず";
+
+            
 
 
-            this.log.Text = "a\n\n\n\n\n\n\n\n\n\n\n\n\n";
+            
         }
 
 
         private void ask_ordersend_Click(object sender, RoutedEventArgs e)
         {
+                      
             MessageBox.Show("買い注文するンゴ");
+ 
 
         }
 
@@ -129,12 +136,19 @@ namespace NeecTrader
         {
 
             int i = Chart.SelectedIndex;
-            Chart.Items.RemoveAt(i);
-        }
 
-       
+            //チャートにタブアイテムがあるか調べる
+            if(Chart.HasItems == false){
+                MessageBox.Show("チャートがありません");
 
+            }
+            else
+            {
+                Chart.Items.RemoveAt(i);
 
-
+            }
+           
+        } 
+        
     }
 }
