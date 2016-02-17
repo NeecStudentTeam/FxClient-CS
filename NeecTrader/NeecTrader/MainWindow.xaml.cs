@@ -26,6 +26,10 @@ namespace NeecTrader
         ObservableCollection<TicketNumber> ticketNumberList;
 
         TradeController trade;
+		FxChartUpdater fxChart;
+		Symbol symbolpair = new Symbol();
+		//
+		ObservableCollection<ChartPoint> chart = new ObservableCollection<ChartPoint>();
 
         public MainWindow()
         {
@@ -34,8 +38,8 @@ namespace NeecTrader
             //トレードコントローラインスタンス化。
             this.trade = new TradeController(true);
 
-
             Symbol[] Symbols = TradeController.GetSymbols();
+			
 
             //アップデート
             foreach(Symbol symbol in Symbols)
@@ -62,12 +66,9 @@ namespace NeecTrader
 
 
 
-
-
             // DataGridに設定する
             this.Symbol.ItemsSource = Symbols;
             this.TicketNumberGrid.ItemsSource = ticketNumberList;
-
 
             this.log.Text = "a\n\n\n\n\n\n\n\n\n\n\n\n\n";
         }
@@ -113,28 +114,24 @@ namespace NeecTrader
         private void chart_show(object sender, RoutedEventArgs e)
         {
             TabItem tab = new TabItem();
-
-            //選択したセルの値を取得
-            string symbol = Symbol.CurrentCell.Item.ToString();                
+			TabControl t = new TabControl();
+			string symbolName = Symbol.CurrentCell.Item.ToString();
             //ヘッダー名
-            tab.Header = symbol;
-            tab.Name = symbol;
-            //新しいタブアイテムを追加
-            Chart.Items.Add(tab);
+            tab.Header = symbolName;
+            tab.Name = symbolName;
 
+            //新しいタブアイテムを追加
+			Chart.Items.Add(tab);
+			fxChart = new FxChartUpdater(chart, trade);
+
+			this.fxChart.Start(symbolpair);
 
         }
 
         private void ChartClose(object sender, RoutedEventArgs e)
         {
-
             int i = Chart.SelectedIndex;
             Chart.Items.RemoveAt(i);
         }
-
-       
-
-
-
     }
 }
