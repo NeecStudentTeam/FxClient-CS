@@ -1,9 +1,12 @@
-﻿<Window x:Class="NeecTrader.MainWindow"
+﻿        <Window x:Class="NeecTrader.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 		xmlns:chartingToolkit="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit" 
         xmlns:visualizationToolkit="clr-namespace:System.Windows.Controls.DataVisualization;assembly=System.Windows.Controls.DataVisualization.Toolkit"
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
         Title="NeecTrader" Height="600" Width="1024">
 	<Window.Resources>
 		<ContextMenu x:Key="Symbol">
@@ -68,6 +71,7 @@
 		<DockPanel DockPanel.Dock="Left">
 			<DataGrid Name="Symbol" AutoGenerateColumns="False"
                         CanUserAddRows="False" ContextMenu="{DynamicResource Symbol}" >
+<<<<<<< Updated upstream
 				<DataGrid.Columns>
 					<DataGridCheckBoxColumn Binding="{Binding check}" Header="簡易決済許可"/>
 					<DataGridTextColumn Binding="{Binding symbol}" Header="シンボル名"/>
@@ -90,6 +94,35 @@
 				</DataGrid.Columns>
 			</DataGrid>
 		</DockPanel>
+=======
+                <DataGrid.ColumnHeaderStyle>
+                    <Style TargetType="DataGridColumnHeader">
+                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                    </Style>
+                </DataGrid.ColumnHeaderStyle>
+                <DataGrid.Columns>
+                    <DataGridCheckBoxColumn Binding="{Binding check}" Header="簡易決済許可"/>
+                    <DataGridTextColumn Binding="{Binding symbolName}" Header="シンボル名"/>
+                    <DataGridTextColumn Binding="{Binding bid}" Header="Bid"/>
+                    <DataGridTemplateColumn Header="簡易注文" >
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Name="bid_ordersend" Content="注文" Click="bid_ordersend_Click"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn Binding="{Binding ask}" Header="Ask"/>
+                    <DataGridTemplateColumn Header="簡易注文" >
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Name="ask_ordersend" Content="注文" Tag="{Binding}" Click="ask_ordersend_Click" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </DockPanel>
+>>>>>>> Stashed changes
 		<!--チャート-->
 		<DockPanel DockPanel.Dock="Right" ContextMenu="{DynamicResource Chart}">
 			<TabControl Name="Chart">
