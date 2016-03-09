@@ -33,48 +33,52 @@ namespace NeecTrader
             //トレードコントローラインスタンス化。
             this.trade = new TradeController(true);
 
-            Symbol[] Symbols = TradeController.GetSymbols();            
+            Symbol[] Symbols = TradeController.GetSymbols();
 
-            this.tyuumon_syurui_combobox.SelectedIndex = 0;
-            this.rot_combobox.SelectedIndex = 0;
+            this.SymbolPair.SelectedIndex = 0;
+            this.Lot.SelectedIndex = 0;
 
-            this.SymbolComboBox.ItemsSource = Symbols;
+            this.SymbolPair.ItemsSource = Symbols;
 
         }
 
 
-
-        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //注文の種類コンボボックス変更イベント
+        private void OrderCmd_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
             // 選択されている項目を取得
-            string selectedItem = ((ComboBoxItem)tyuumon_syurui_combobox.SelectedItem).Content.ToString();
+            string selectedItem = ((ComboBoxItem)OrderCmd.SelectedItem).Content.ToString();
 
             if (selectedItem == "成功注文")
             {
-                seikou.Visibility = Visibility.Visible;
-                gyakusasine.Visibility = Visibility.Collapsed;
+                
+                Success.Visibility = Visibility.Visible;
+                Limit.Visibility = Visibility.Collapsed;
             }
             else if (selectedItem == "指値または逆指値注文")
             {
-                gyakusasine.Visibility = Visibility.Visible;
-                seikou.Visibility = Visibility.Collapsed;
+                Limit.Visibility = Visibility.Visible;
+                Success.Visibility = Visibility.Collapsed;
             }
 
 
         }
 
+        //成功売り注文ボタンクリックイベント
         private void Bid_Button_Click(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("成功売り注文するンゴ");
         }
 
+        //成功買い注文ボタンクリックイベント
         private void Ask_Button_Click(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("成功買い注文するンゴ");
         }
 
-        private void OrderSend_Button_Click(object sender, RoutedEventArgs e)
+        //指値発注ボタンクリックイベント
+        private void OrderSend_Limit_Click(object sender, RoutedEventArgs e)
         {
             var bindingData = DataContext as TestBindObject;
             //MessageBox.Show("a");
@@ -82,6 +86,12 @@ namespace NeecTrader
             {
                 MessageBox.Show("内部値は : " + bindingData.A.ToString());
             }
+        }
+
+        //シンボルペアコンボボックスの値変更イベント
+        private void SymbolPair_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            
         }
     }
 }

@@ -14,8 +14,6 @@ namespace NeecTrader
 
         IMT4 mt4;
 
-        List<Ticket> orderTicketList = new List<Ticket>();
-
         /// <summary>
         /// インスタンス化。
         /// </summary>
@@ -53,30 +51,30 @@ namespace NeecTrader
         {
             Symbol[] symbols = new[]
             {
-                new Symbol {symbol = "USDCHF"},
-                new Symbol {symbol = "GBPUSD"},
-                new Symbol {symbol = "EURUSD"},
-                new Symbol {symbol = "USDJPY"},
-                new Symbol {symbol = "USDCAD"},
-                new Symbol {symbol = "AUDUSD"},
-                new Symbol {symbol = "EURGBP"},
-                new Symbol {symbol = "EURAUD"},
-                new Symbol {symbol = "EURCHF"},
-                new Symbol {symbol = "EURJPY"},
-                new Symbol {symbol = "GBPJPY"},
-                new Symbol {symbol = "GBPCHF"},
-                new Symbol {symbol = "CADJPY"},
-                new Symbol {symbol = "GBPJPY"},
-                new Symbol {symbol = "AUDNZD"},
-                new Symbol {symbol = "AUDCAD"},
-                new Symbol {symbol = "AUDCHF"},
-                new Symbol {symbol = "AUDJPY"},
-                new Symbol {symbol = "CHFJPY"},
-                new Symbol {symbol = "EURNZD"},
-                new Symbol {symbol = "EURCAD"},
-                new Symbol {symbol = "CADCHF"},
-                new Symbol {symbol = "NZDJPY"},
-                new Symbol {symbol = "NZDUSD"}
+                new Symbol {symbolName = "USDCHF"},
+                new Symbol {symbolName = "GBPUSD"},
+                new Symbol {symbolName = "EURUSD"},
+                new Symbol {symbolName = "USDJPY"},
+                new Symbol {symbolName = "USDCAD"},
+                new Symbol {symbolName = "AUDUSD"},
+                new Symbol {symbolName = "EURGBP"},
+                new Symbol {symbolName = "EURAUD"},
+                new Symbol {symbolName = "EURCHF"},
+                new Symbol {symbolName = "EURJPY"},
+                new Symbol {symbolName = "GBPJPY"},
+                new Symbol {symbolName = "GBPCHF"},
+                new Symbol {symbolName = "CADJPY"},
+                new Symbol {symbolName = "GBPJPY"},
+                new Symbol {symbolName = "AUDNZD"},
+                new Symbol {symbolName = "AUDCAD"},
+                new Symbol {symbolName = "AUDCHF"},
+                new Symbol {symbolName = "AUDJPY"},
+                new Symbol {symbolName = "CHFJPY"},
+                new Symbol {symbolName = "EURNZD"},
+                new Symbol {symbolName = "EURCAD"},
+                new Symbol {symbolName = "CADCHF"},
+                new Symbol {symbolName = "NZDJPY"},
+                new Symbol {symbolName = "NZDUSD"}
 
             };
 
@@ -91,13 +89,12 @@ namespace NeecTrader
 
         public Ticket OrderSend(Symbol symbol, int cmd, double volume, double price, int slippage, double stoploss, double takeprofit, string comment, int magic, MT4DateTime expiration, MT4Color arrow_color)
         {
-            int number = mt4.OrderSend(symbol.symbol, cmd, volume, price, slippage, stoploss, takeprofit, comment, magic, expiration, arrow_color);
+            int number = mt4.OrderSend(symbol.symbolName, cmd, volume, price, slippage, stoploss, takeprofit, comment, magic, expiration, arrow_color);
 
 
             if(number != -1)
             {
-                Ticket ticket = new Ticket() { Number = number, Cmd = cmd == 0 ? "Ask" : "Bid", Symbol = symbol, date = DateTime.Now, Rate = cmd == 0 ? this.GetAsk(symbol) : this.GetBid(symbol), Status = Ticket.TicketStatus.STATUS_ORDERED};
-                this.orderTicketList.Add(ticket);
+                Ticket ticket = new Ticket() { number = number, cmd = cmd == 0 ? "Ask" : "Bid", symbol = symbol, time = DateTime.Now, rate = cmd == 0 ? this.GetAsk(symbol) : this.GetBid(symbol), status = Ticket.TicketStatus.STATUS_ORDERED};
                 return ticket;
             }
             else
@@ -108,11 +105,10 @@ namespace NeecTrader
 
         public bool OrderClose(Ticket ticket, double lots, double price, int slippage, MT4Color arrow_color)
         {
-            bool result = this.mt4.OrderClose(ticket.Number, lots, price, slippage, arrow_color);
+            bool result = this.mt4.OrderClose(ticket.number, lots, price, slippage, arrow_color);
             if (result)
             {
-                ticket.Status = Ticket.TicketStatus.STATUS_CLOSED;
-                this.orderTicketList.Remove(ticket);
+                ticket.status = Ticket.TicketStatus.STATUS_CLOSED;
                 return true;
             }
             else
@@ -123,12 +119,12 @@ namespace NeecTrader
 
         public double GetBid(Symbol symbol)
         {
-            return mt4.MarketInfo(symbol.symbol, 9);
+            return mt4.MarketInfo(symbol.symbolName, 9);
         }
 
         public double GetAsk(Symbol symbol)
         {
-            return mt4.MarketInfo(symbol.symbol, 10);
+            return mt4.MarketInfo(symbol.symbolName, 10);
         }
 
         public void SetLogger(ILogger logger)
@@ -136,14 +132,9 @@ namespace NeecTrader
             this.logger = logger;
         }
 
-        public List<Ticket> GetOrderTickets()
-        {
-            return new List<Ticket>(this.orderTicketList);
-        }
-
         public Double GetOrderProfit(Ticket ticket)
         {
-            mt4.OrderSelect(ticket.Number,1,0);
+            mt4.OrderSelect(ticket.number,1,0);
             return mt4.OrderProfit();
         }
 
